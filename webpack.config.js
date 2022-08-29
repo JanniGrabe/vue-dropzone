@@ -1,8 +1,8 @@
 const webpack = require('webpack');
 const path = require('path');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
-const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
-var HtmlWebpackPlugin = require('html-webpack-plugin');
+const TerserPlugin = require("terser-webpack-plugin");
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 // Update this for additional vendor libraries
 const VENDOR_LIBS = ['vue'];
@@ -14,42 +14,11 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, './docs/dist'),
-    filename: '[name].[hash].js'
+    filename: '[name].[fullhash].js'
   },
   optimization: {
-    minimizer: [
-      new UglifyJsPlugin({
-        sourceMap: true,
-        parallel: 4,
-        uglifyOptions: {
-          warnings: false,
-          compress: {
-            warnings: false
-          },
-        },
-      })
-    ],
-    splitChunks: {
-      chunks: 'async',
-      minSize: 30000,
-      maxSize: 0,
-      minChunks: 1,
-      maxAsyncRequests: 5,
-      maxInitialRequests: 3,
-      automaticNameDelimiter: '~',
-      name: true,
-      cacheGroups: {
-        vendors: {
-          test: /[\\/]node_modules[\\/]/,
-          priority: -10
-        },
-        default: {
-          minChunks: 2,
-          priority: -20,
-          reuseExistingChunk: true
-        }
-      }
-    }
+    minimize: true,
+    minimizer: [new TerserPlugin()],
   },
   plugins: [
     new VueLoaderPlugin(),
@@ -71,7 +40,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        loader: 'vue-style-loader!css-loader'
+        use: ['vue-style-loader', 'css-loader']
       },
       {
         test: /\.less$/,
@@ -92,7 +61,7 @@ module.exports = {
         test: /\.(png|jpg|gif|svg)$/,
         loader: 'file-loader',
         options: {
-          name: '[name].[ext]?[hash]'
+          name: '[name].[ext]?[fullhash]'
         }
       }
     ]
@@ -105,12 +74,14 @@ module.exports = {
   },
   devServer: {
     historyApiFallback: true,
-    noInfo: true
+    client: {
+      logging: 'none',
+    },
   },
   performance: {
     hints: false
   },
-  devtool: '#eval-source-map'
+  devtool: 'eval-source-map'
 }
 
 if (process.env.NODE_ENV === 'production') {
