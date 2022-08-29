@@ -275,15 +275,10 @@ export default {
       file.manuallyAdded = true;
       this.dropzone.emit("addedfile", file);
       let containsImageFileType = false;
-      if (
-        fileUrl.indexOf(".svg") > -1 ||
-        fileUrl.indexOf(".png") > -1 ||
-        fileUrl.indexOf(".jpg") > -1 ||
-        fileUrl.indexOf(".jpeg") > -1 ||
-        fileUrl.indexOf(".gif") > -1 ||
-        fileUrl.indexOf(".webp") > -1
-      )
+      const supportedThumbnailTypes = [".svg", ".png", ".jpg", "jpeg", ".gif", ".webp", "image/"]
+      if ( supportedThumbnailTypes.filter(s => fileUrl.toLowerCase().indexOf(s) > -1).length > 0) {
         containsImageFileType = true;
+      }
       if (
         this.dropzone.options.createImageThumbnails &&
         containsImageFileType &&
@@ -304,6 +299,7 @@ export default {
       }
       this.dropzone.emit("complete", file);
       if (this.dropzone.options.maxFiles) this.dropzone.options.maxFiles--;
+      file.accepted = true;
       this.dropzone.files.push(file);
       this.$emit("vdropzone-file-added-manually", file);
     },
@@ -437,6 +433,7 @@ export default {
   letter-spacing: 0.2px;
   color: #777;
   transition: 0.2s linear;
+  border-radius: .25rem;
 }
 
 .vue-dropzone:hover {
@@ -448,14 +445,11 @@ export default {
 }
 
 .vue-dropzone > .dz-preview .dz-image {
-  border-radius: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.vue-dropzone > .dz-preview .dz-image img:not([src]) {
-  width: 200px;
-  height: 200px;
+  border-radius: .25rem;
+  width: 9rem;
+  height: 9rem;
+  --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  box-shadow: 0 0 #0000, 0 0 #0000, var(--shadow);
 }
 
 .vue-dropzone > .dz-preview .dz-image:hover img {
@@ -467,9 +461,12 @@ export default {
   bottom: 0;
   top: 0;
   color: white;
-  background-color: rgba(33, 150, 243, 0.8);
+  background-color: rgba(80, 80, 80, .65);
   transition: opacity 0.2s linear;
   text-align: left;
+  display: flex;
+  flex-direction: column-reverse;
+  border-radius: 0.25rem;
 }
 
 .vue-dropzone > .dz-preview .dz-details .dz-filename {
@@ -481,6 +478,14 @@ export default {
   background-color: transparent;
 }
 
+.dz-preview .dz-details .dz-size {
+  font-size: inherit !important;
+}
+
+.dz-preview {
+  margin: 0 1rem 1rem 0 !important;
+}
+
 .vue-dropzone > .dz-preview .dz-details .dz-filename:not(:hover) span {
   border: none;
 }
@@ -488,6 +493,21 @@ export default {
 .vue-dropzone > .dz-preview .dz-details .dz-filename:hover span {
   background-color: transparent;
   border: none;
+}
+
+.dropzone .dz-preview .dz-details .dz-filename {
+  white-space: normal;
+}
+
+.dropzone .dz-preview .dz-details .dz-filename span, .dropzone .dz-preview .dz-details .dz-size span {
+  padding: 0;
+  user-select: none;
+}
+
+.vue-dropzone > .dz-preview .dz-success-mark,
+.vue-dropzone > .dz-preview .dz-error-mark,
+.vue-dropzone > .dz-preview .dz-progress {
+  display: none;
 }
 
 .vue-dropzone > .dz-preview .dz-progress .dz-upload {
@@ -498,30 +518,21 @@ export default {
   position: absolute;
   z-index: 30;
   color: white;
-  margin-left: 15px;
+  top: 5px;
+  right: 5px;
   padding: 10px;
-  top: inherit;
-  bottom: 15px;
-  border: 2px white solid;
   text-decoration: none;
-  text-transform: uppercase;
-  font-size: 0.8rem;
-  font-weight: 800;
-  letter-spacing: 1.1px;
   opacity: 0;
+  transition: .3s;
+  content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23FFF' class='bi bi-x-lg' viewBox='0 0 16 16'%3E%3Cpath d='M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z'/%3E%3C/svg%3E");
 }
 
 .vue-dropzone > .dz-preview:hover .dz-remove {
   opacity: 1;
 }
 
-.vue-dropzone > .dz-preview .dz-success-mark,
-.vue-dropzone > .dz-preview .dz-error-mark {
-  margin-left: auto;
-  margin-top: auto;
-  width: 100%;
-  top: 35%;
-  left: 0;
+.dz-preview .dz-remove:hover {
+  filter: drop-shadow(0 0 5px #FFF);
 }
 
 .vue-dropzone > .dz-preview .dz-success-mark svg,
