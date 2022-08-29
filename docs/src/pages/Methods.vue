@@ -4,7 +4,7 @@
     <p>The following methods are able to called from the parent component using the ref tag.</p>
     <simple-table :headers="['Method Name', 'Description']" :rows="methods" />
     <h3>Snippet</h3>
-    <p v-html="marked(example)"></p>
+    <pre data-lang="js"><code class="lang-js">{{ example }}</code></pre>
     <edit-doc :link="'Methods.vue'"></edit-doc>
   </div>
 </template>
@@ -25,7 +25,7 @@ var example = `
 export default {
   data: function() {
     return {
-      example: "````" + example + "````",
+      example: example,
       methods: [
         ['.removeAllFiles()', 'Removes all files. Files that are in the process of being uploaded won’t be removed. If you want files that are currently uploading to be canceled, call `.removeAllFiles(true)` which will cancel the uploads.'],
         ['.setOption(optionName, value)', 'Sets the value of one of the dropzone options after initialisation. Handy if you need to pass through a token after the component has initialised.'],

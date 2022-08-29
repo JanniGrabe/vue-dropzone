@@ -1,7 +1,7 @@
 <template>
   <aside class="sidebar">
     <h1>
-      <a class="app-name-link" data-nosearch="" href="/vue-dropzone/docs/"><img src="../assets/vue2-dropzone1.png"></a>
+      <a class="app-name-link" data-nosearch="" href="/vue-dropzone/docs/dist/"><img :src="require('../assets/vue2-dropzone1.png').default"></a>
     </h1>
 
     <hr class="border">
@@ -10,8 +10,10 @@
         <li v-for="section in sections" :key="section.title">
           <p>{{ section.title}}</p>
           <ul>
-            <router-link v-for="page in section.pages" tag="li" active-class="active" :key="page.title" :to="page.to">
-              <a>{{page.title}}</a>
+            <router-link v-for="page in section.pages" :to="page.to" active-class="active" :key="page.title">
+              <li>
+                <a>{{page.title}}</a>
+              </li>
             </router-link>
           </ul>
         </li>

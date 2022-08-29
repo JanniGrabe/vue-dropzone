@@ -5,9 +5,9 @@
     <vue-dropzone ref="myVueDropzone" id="dropzone" v-on:vdropzone-sending="sendingEvent" :options="dropzoneOptions">
     </vue-dropzone>
     <h3>HTML</h3>
-    <p v-html="marked(html)"></p>
+    <pre data-lang="html"><code class="lang-html">{{ html }}</code></pre>
     <h3>Javascript</h3>
-    <p v-html="marked(js)"></p>
+    <pre data-lang="js"><code class="lang-js">{{ js }}</code></pre>
     <edit-doc :link="'SendAdditionalParamsDemo.vue'"></edit-doc>
   </div>
 </template>
@@ -33,8 +33,8 @@ export default {
   data() {
     return {
       description: "Additional parameters can be added to upload events to send additional information to the server by hijacking the `vdropzone-sending` event.",
-      html: "````" + html + "````",
-      js: "````" + js + "````",
+      html: html,
+      js: js,
       dropzoneOptions: {
         url: 'https://httpbin.org/post',
         thumbnailWidth: 200,

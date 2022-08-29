@@ -9,11 +9,11 @@
       </div>
     </vue-dropzone>
     <h3>HTML</h3>
-    <p v-html="marked(html)"></p>
+    <pre data-lang="html"><code class="lang-html">{{ html }}</code></pre>
     <h3>Javascript</h3>
-    <p v-html="marked(js)"></p>
+    <pre data-lang="js"><code class="lang-js">{{ js }}</code></pre>
     <h3>Style</h3>
-    <p v-html="marked(css)"></p>
+    <pre data-lang="css"><code class="lang-css">{{ css }}</code></pre>
     <edit-doc :link="'CustomHtml.vue'"></edit-doc>
   </div>
 </template>
@@ -66,9 +66,9 @@ export default {
     return {
       description:
         'With the `useCustomSlot` property set to `true` you can insert any html you can to replace the default message for the dropzone. The content will automatically we wrapped inside the `.dz-message` class.',
-      html: '````' + html + '````',
-      css: '````' + css + '````',
-      js: '````' + js + '````',
+      html: html,
+      css: css,
+      js: js,
       dropzoneOptions: {
         url: 'https://httpbin.org/post',
         thumbnailWidth: 200,

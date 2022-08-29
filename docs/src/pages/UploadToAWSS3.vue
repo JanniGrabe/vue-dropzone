@@ -28,9 +28,9 @@
     <h3>Note</h3>
     <div v-html="marked(awsNote)"></div>
     <h3>HTML</h3>
-    <p v-html="marked(html)"></p>
+    <pre data-lang="html"><code class="lang-html">{{ html }}</code></pre>
     <h3>Javascript</h3>
-    <p v-html="marked(js)"></p>
+    <pre data-lang="js"><code class="lang-js">{{ js }}</code></pre>
     <p v-html="marked(signerAsFunc)"></p>
     <p v-html="marked(jsSignerAsFunc)"></p>
     <edit-doc :link="'UploadToAWSS3.vue'"></edit-doc>

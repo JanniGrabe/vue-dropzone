@@ -9,13 +9,13 @@
     </vue-dropzone>
     <hr />
     <h3>HTML</h3>
-    <p v-html="marked(html)"></p>
+    <pre data-lang="html"><code class="lang-html">{{ html }}</code></pre>
     <hr />
     <h3>Javascript</h3>
     <p v-html="marked(javascript)"></p>
     <hr />
     <h3>Style</h3>
-    <p v-html="marked(style)"></p>
+    <pre data-lang="css"><code class="lang-css">{{ style }}</code></pre>
     <edit-doc :link="'customPreviewDemo.vue'"></edit-doc>
 
   </div>

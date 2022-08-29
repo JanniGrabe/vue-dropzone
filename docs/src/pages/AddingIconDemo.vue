@@ -5,11 +5,11 @@
     <vue-dropzone ref="myVueDropzone" id="dropzone" :options="dropzoneOptions">
     </vue-dropzone>
     <h3>HTML</h3>
-    <p v-html="marked(html)"></p>
+    <pre data-lang="html"><code class="lang-html">{{ html }}</code></pre>
     <h3>Javascript</h3>
-    <p v-html="marked(js)"></p>
+    <pre data-lang="js"><code class="lang-js">{{ js }}</code></pre>
     <h3>Style</h3>
-    <p v-html="marked(css)"></p>
+    <pre data-lang="css"><code class="lang-css">{{ css }}</code></pre>
     <edit-doc :link="'AddingIconDemo.vue'"></edit-doc>
   </div>
 </template>
@@ -43,9 +43,9 @@ export default {
   data() {
     return {
       description: "Using the `dictDefaultMessage` property you to pass in icons to your dropzone to make it look a bit nicer.",
-      html: "````" + html + "````",
-      css: "````" + css + "````",
-      js: "````" + js + "````",
+      html: html,
+      css: css,
+      js: js,
       dropzoneOptions: {
         url: 'https://httpbin.org/post',
         thumbnailWidth: 200,

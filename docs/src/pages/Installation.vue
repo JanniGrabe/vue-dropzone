@@ -8,7 +8,7 @@
     <hr>
     <h1>Installation & Usage</h1>
     <pre v-pre data-lang="bash"><code class="lang-bash">npm install vue2-dropzone</code></pre>
-    <p v-html="marked(example)"></p>
+    <pre data-lang="js"><code class="lang-js">{{ example }}</code></pre>
     <h2>Alternate installation</h2>
     <p>If required you clone the Git repository of this library and build it.</p>
     <pre v-pre data-lang="bash"><code class="lang-bash">git clone https://github.com/rowanwins/vue-dropzone.git
@@ -44,7 +44,7 @@ export default {
   data() {
     return {
       ok: true,
-      example: "````" + e + "````",
+      example: e,
     }
   },
   components: {

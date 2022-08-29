@@ -7,9 +7,9 @@
     <p>Filecount: {{fileCount}}</p>
     <button v-on:click="addFile" class="manual">Manually add file</button>
     <h3>HTML</h3>
-    <p v-html="marked(html)"></p>
+    <pre data-lang="html"><code class="lang-html">{{ html }}</code></pre>
     <h3>Javascript</h3>
-    <p v-html="marked(js)"></p>
+    <pre data-lang="js"><code class="lang-js">{{ js }}</code></pre>
     <edit-doc :link="'ManuallyAddDemo.vue'"></edit-doc>
   </div>
 </template>
@@ -37,8 +37,8 @@ export default {
     return {
       fileCount: 0,
       description: "Using the `manuallyAddFile` method allows you to programatically add files to your dropzone area. For example if you already have files on your server that you'd like to pre-populate your dropzone area with then simply use the function when the `vdropzone-mounted` event is fired.",
-      html: "````" + html + "````",
-      js: "````" + js + "````",
+      html: html,
+      js: js,
       dropzoneOptions: {
         url: 'https://httpbin.org/post',
         thumbnailWidth: 200,
